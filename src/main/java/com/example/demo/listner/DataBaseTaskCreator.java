@@ -4,7 +4,7 @@ import com.example.demo.Task;
 import com.example.demo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class DataBaseTaskCreator {
 
     private final TaskService taskService;
 
-    @EventListener(ApplicationStartedEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void createTaskData() {
         log.debug("Starting task creation");
         List<Task> tasks = new ArrayList<>();

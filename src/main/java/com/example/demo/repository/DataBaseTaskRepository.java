@@ -3,7 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.Task;
 import com.example.demo.exception.TaskNotFoundException;
 import com.example.demo.mapper.TaskRowMapper;
-import com.example.demo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -74,11 +73,12 @@ public class DataBaseTaskRepository implements TaskRepository {
 
     }
 
+
     @Override
     public void batchInsert(List<Task> tasks) {
         log.debug("Calling batchInsert in DataBase");
         String sql = "INSERT INTO task (id, title, description, priority) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, new BatchPreparedStatementSetter() {
+        jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 Task task = tasks.get(i);
@@ -86,10 +86,6 @@ public class DataBaseTaskRepository implements TaskRepository {
                 ps.setString(2, task.getTitle());
                 ps.setString(3, task.getDescription());
                 ps.setInt(4, task.getPriority());
-/*                ps.setString(1, task.getTitle());
-                ps.setString(2, task.getDescription());
-                ps.setInt(3, task.getPriority());
-                ps.setLong(4, task.getId());*/
             }
 
             @Override
