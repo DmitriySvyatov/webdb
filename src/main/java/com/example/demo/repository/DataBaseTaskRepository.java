@@ -77,12 +77,12 @@ public class DataBaseTaskRepository implements TaskRepository {
     @Override
     public void batchInsert(List<Task> tasks) {
         log.debug("Calling batchInsert in DataBase");
-        String sql = "INSERT INTO task (id,title,descpription,priority) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO task (id, title, description, priority) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 Task task = tasks.get(i);
-                ps.setInt(1, task.getId().intValue());
+                ps.setLong(1, task.getId());
                 ps.setString(2, task.getTitle());
                 ps.setString(3, task.getDescription());
                 ps.setInt(4, task.getPriority());
