@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tasks
+    username: postgres
+    password: Teddy2008!
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.default_schema: tasks_schema
